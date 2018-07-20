@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_marginTop="16dp"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_item_gradient">
+
+    <TextView
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:padding="10sp"
+        android:text="Контрольная работа завтра по русскому языку"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorWhite"
+        android:textSize="19sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

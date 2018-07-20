@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+
+    android:background="@drawable/rounded_login">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Логин"
+            android:textSize="15sp" />
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15sp">
+
+            <EditText
+                android:id="@+id/login_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_item_gray"
+                android:padding="11sp"
+                android:paddingLeft="15sp"
+                android:ems="10"
+                android:inputType="none"
+                android:textSize="13sp" />
+        </RelativeLayout>
+        <TextView
+            android:layout_marginTop="15sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Пароль"
+            android:textSize="15sp" />
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15sp">
+
+            <EditText
+                android:id="@+id/password_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_item_gray"
+                android:padding="11sp"
+                android:paddingStart="15sp"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <include
+            layout="@layout/login_button"
+            android:id="@+id/login_button"/>
+    </LinearLayout>
+</RelativeLayout>

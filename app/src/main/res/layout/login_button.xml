@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="@drawable/rounded_item_black"
+    android:layout_marginTop="70dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:height="50sp"
+        android:paddingVertical="9sp"
+        android:text="Войти"
+        android:textAlignment="center"
+        android:textColor="@android:color/background_light"
+        android:textSize="19sp"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>

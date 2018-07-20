@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:elevation="50dp"
+    android:background="@drawable/rounded_item_white"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/move_tool">
+        <View
+            android:layout_width="26dp"
+            android:layout_height="7dp"
+            android:background="@drawable/rounded_menu_swiper"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_marginStart="20dp"
+        android:padding="10dp"
+        android:paddingStart="20dp"
+        android:id="@+id/main_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:text="Главная"
+        android:textColor="@color/colorBlack"
+        android:textStyle="normal"
+        android:textSize="21sp" />
+
+    <TextView
+        android:layout_marginStart="20dp"
+        android:paddingStart="20dp"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorBlack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="21sp"
+        android:text="Дневник"/>
+
+    <TextView
+        android:layout_marginStart="20dp"
+        android:paddingStart="20dp"
+        android:padding="10dp"
+        android:textColor="@color/colorBlack"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="21sp"
+        android:text="Бот"/>
+
+    <TextView
+        android:layout_marginStart="20dp"
+        android:paddingStart="20dp"
+        android:padding="10dp"
+        android:textColor="@color/colorBlack"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="21sp"
+        android:text="FAQs"/>
+
+</LinearLayout>

@@ -18,6 +18,7 @@ import com.example.slava.projectkek.R
 import com.example.slava.projectkek.data.PreferencesHelper
 import com.example.slava.projectkek.domain.utils.Animations
 import com.example.slava.projectkek.domain.utils.MenuPainter
+import com.example.slava.projectkek.domain.utils.TextAdder
 import khttp.get
 import khttp.responses.Response
 import kotlinx.android.synthetic.main.activity_main.*
@@ -65,39 +66,15 @@ class MainActivity : AppCompatActivity() {
 
         //getting containers
 
-        var homework_container = main_block.findViewById<LinearLayout>(R.id.tomorrow_homework)
-        var schedule_containder = main_block.findViewById<LinearLayout>(R.id.tomorrow_schedule)
+        val homework_container = main_block.findViewById<LinearLayout>(R.id.tomorrow_homework)
+        val schedule_containder = main_block.findViewById<LinearLayout>(R.id.tomorrow_schedule)
 
-        val kek = LinearLayout(this)
+        TextAdder.addHomework(homework_container , "Русский язык" , "кек всем", this)
 
-        val sub_view_subject = TextView(this)
+        TextAdder.addSchedule(schedule_containder , "Русский" , this)
+        TextAdder.addSchedule(schedule_containder , "Русский" , this)
+        TextAdder.addSchedule(schedule_containder , "Русский" , this)
 
-
-        sub_view_subject.text = "Русский язык: "
-        sub_view_subject.textSize = 20f
-        sub_view_subject.setTypeface(null, Typeface.BOLD)
-        sub_view_subject.setTextColor(Color.parseColor("#000000"))
-
-        val sub_view_excercise = TextView(this)
-
-        sub_view_excercise.text = "задание в тетради ахахахахаххахахахахах ахвхавых оллол дл кек "
-        sub_view_excercise.textSize = 20f
-        kek.orientation = LinearLayout.VERTICAL
-        kek.addView(sub_view_subject)
-        kek.addView(sub_view_excercise)
-
-        kek.setPadding(0 , 20 , 0 , 0)
-
-        val subject = TextView(this)
-
-        subject.text = "Русский язык"
-        subject.textSize = 20f
-        subject.setTypeface(null, Typeface.BOLD)
-        subject.setTextColor(Color.parseColor("#000000"))
-        subject.setPadding(0 , 20 , 0 , 0)
-
-        homework_container.addView(kek)
-        schedule_containder.addView(subject)
 
 
         showPopUpMenu.setOnClickListener {

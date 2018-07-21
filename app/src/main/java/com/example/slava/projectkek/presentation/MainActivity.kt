@@ -16,6 +16,7 @@ import android.widget.TextView
 import com.eclipsesource.json.Json
 import com.example.slava.projectkek.R
 import com.example.slava.projectkek.data.PreferencesHelper
+import com.example.slava.projectkek.domain.utils.MenuPainter
 import khttp.get
 import khttp.responses.Response
 import kotlinx.android.synthetic.main.activity_main.*
@@ -36,7 +37,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
         }
 
-
         var params = mapOf(
                 "devkey" to "8227490faaaa60bb94b7cb2f92eb08a4",
                 "vendor" to "hselyceum",
@@ -54,17 +54,12 @@ class MainActivity : AppCompatActivity() {
             responseHomework = get("http://10.0.2.2:8000/api/gethomework/")
             //Log.e("keek" , Json.parse(lol.text).asObject().get("response").asObject().get("state").asInt().toString())
             uiThread {
-               // Json.parse(responseHomework.text).asObject().get("response").asObject().get
+               //Json.parse(responseHomework.text).asObject().get("response").asObject().get
             }
         }
 
         //setting pop up menu
-
-        val hide_menu = menu.findViewById<TextView>(R.id.main_page)
-        hide_menu.setTypeface(null , Typeface.BOLD)
-        hide_menu.setBackgroundResource(R.drawable.gradient_menu_item_rounded)
-        hide_menu.setTextColor(Color.parseColor("#ffffff"))
-
+        MenuPainter.paintMenu(menuOption1, menu.findViewById(R.id.main_page))
 
         //getting containers
 

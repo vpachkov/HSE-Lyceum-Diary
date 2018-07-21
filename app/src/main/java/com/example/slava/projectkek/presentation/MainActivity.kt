@@ -13,14 +13,17 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.eclipsesource.json.Json
 import com.example.slava.projectkek.R
 import com.example.slava.projectkek.data.PreferencesHelper
 import khttp.get
+import khttp.responses.Response
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.black_screen.*
 import org.jetbrains.anko.doAsync
 import kotlinx.android.synthetic.main.pop_up_menu.*
+import org.jetbrains.anko.uiThread
 import java.text.ParsePosition
 
 class MainActivity : AppCompatActivity() {
@@ -44,17 +47,26 @@ class MainActivity : AppCompatActivity() {
 
         )
 
+        lateinit var responseHomework: Response
+
         doAsync {
-            val lol = get("https://api.eljur.ru/api/getschedule", data = params)
-            Log.e("keek" , lol.text)
+            Log.e("keek" , "kekkekekekkse")
+            responseHomework = get("http://10.0.2.2:8000/api/gethomework/")
+            //Log.e("keek" , Json.parse(lol.text).asObject().get("response").asObject().get("state").asInt().toString())
+            uiThread {
+               // Json.parse(responseHomework.text).asObject().get("response").asObject().get
+            }
         }
+
         //setting pop up menu
+
         val hide_menu = menu.findViewById<TextView>(R.id.main_page)
         hide_menu.setTypeface(null , Typeface.BOLD)
         hide_menu.setBackgroundResource(R.drawable.gradient_menu_item_rounded)
         hide_menu.setTextColor(Color.parseColor("#ffffff"))
 
 
+        //getting containers
 
         var homework_container = main_block.findViewById<LinearLayout>(R.id.tomorrow_homework)
         var schedule_containder = main_block.findViewById<LinearLayout>(R.id.tomorrow_schedule)

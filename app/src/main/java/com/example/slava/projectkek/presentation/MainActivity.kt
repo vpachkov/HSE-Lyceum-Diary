@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         lateinit var responseHomework: Response
+        val animations = Animations(menu, black_screen_container)
 
         doAsync {
             Log.e("keek" , "kekkekekekkse")
@@ -100,19 +101,15 @@ class MainActivity : AppCompatActivity() {
 
 
         showPopUpMenu.setOnClickListener {
-            val anim = AnimationUtils.loadAnimation(applicationContext, R.anim.pop_up_menu_transition_up)
-            //val animator = menu.animate()
             menu.visibility = View.VISIBLE
-            black_screen_container.elevation = 1f
-            //showFromBottom(menu)
-            menu.startAnimation(anim)
-            Animations.setAlpha(black_screen_container, 0.6f)
+            menu.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.pop_up_menu_transition_up))
+            animations.setAlpha(black_screen_container, 0.6f)
         }
 
         black_screen_container.setOnClickListener {
             if ( black_screen_container.alpha == 0.6f){
                 menu.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.pop_up_menu_transition_down))
-                Animations.setAlpha(black_screen_container, 0f)
+                animations.setAlpha(black_screen_container, 0f)
                 menu.visibility = View.INVISIBLE
             }
         }
@@ -123,47 +120,10 @@ class MainActivity : AppCompatActivity() {
         menu.setOnClickListener {
             Log.e("keek" , "lllll")
         }
-        move_tool.setOnTouchListener(listener)
+        move_tool.setOnTouchListener(animations.listener)
 
     }
 
-    var toTop = 0F
-    var ignoreTouch = false
-    var wereGesture = false
-    var firstTouch = 0F
-    var positionMenu = 0F
 
-    var listener = View.OnTouchListener(function = {_, motionEvent ->
-
-        if (motionEvent.action == MotionEvent.ACTION_DOWN) {
-            toTop = motionEvent.rawY - menu.y
-            ignoreTouch = false
-            wereGesture = false
-            firstTouch = motionEvent.rawY
-            positionMenu = menu.y
-        }
-
-        if (motionEvent.action == MotionEvent.ACTION_MOVE) {
-            if (ignoreTouch == false) {
-                wereGesture = true
-                if (motionEvent.rawY - toTop >= black_screen_container.height - menu.height) {
-                    menu.y = motionEvent.rawY - toTop
-                } else {
-                    menu.y = (black_screen_container.height - menu.height).toFloat()
-                }
-            }
-        }
-
-        if (motionEvent.action == MotionEvent.ACTION_UP){
-            if (motionEvent.rawY - firstTouch > 50) {
-                Animations.hideFromBottom(menu, positionMenu, black_screen_container)
-                wereGesture = false
-            } else {
-                Animations.showFromBottom(menu, black_screen_container)
-            }
-        }
-
-        true
-    })
 
 }

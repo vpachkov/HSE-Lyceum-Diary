@@ -16,6 +16,7 @@ import android.widget.TextView
 import com.eclipsesource.json.Json
 import com.example.slava.projectkek.R
 import com.example.slava.projectkek.data.PreferencesHelper
+import com.example.slava.projectkek.domain.utils.Animations
 import com.example.slava.projectkek.domain.utils.MenuPainter
 import khttp.get
 import khttp.responses.Response
@@ -105,13 +106,13 @@ class MainActivity : AppCompatActivity() {
             black_screen_container.elevation = 1f
             //showFromBottom(menu)
             menu.startAnimation(anim)
-            setAlpha(black_screen_container, 0.6f)
+            Animations.setAlpha(black_screen_container, 0.6f)
         }
 
         black_screen_container.setOnClickListener {
             if ( black_screen_container.alpha == 0.6f){
                 menu.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.pop_up_menu_transition_down))
-                setAlpha(black_screen_container, 0f)
+                Animations.setAlpha(black_screen_container, 0f)
                 menu.visibility = View.INVISIBLE
             }
         }
@@ -155,51 +156,14 @@ class MainActivity : AppCompatActivity() {
 
         if (motionEvent.action == MotionEvent.ACTION_UP){
             if (motionEvent.rawY - firstTouch > 50) {
-                hideFromBottom(menu, positionMenu)
+                Animations.hideFromBottom(menu, positionMenu, black_screen_container)
                 wereGesture = false
             } else {
-                showFromBottom(menu)
+                Animations.showFromBottom(menu, black_screen_container)
             }
         }
 
         true
-
     })
-
-    fun setAlpha(v: View, alpha: Float){
-        val animator = v.animate()
-        animator.alpha(alpha).duration = 200
-        if (alpha == 0f)
-            animator.withEndAction {
-                v.elevation = -1f
-            }
-        else
-            animator.withEndAction {
-                v.elevation = 1f
-            }
-    }
-
-    fun showFromBottom(v: View) {
-        v.visibility = View.VISIBLE
-        val animator = v.animate()
-        animator.translationY(0F).duration = 200
-
-        setAlpha(black_screen_container, 0.6f)
-
-    }
-
-    fun hideFromBottom(v: View, pos: Float) {
-        val animator = v.animate()
-        animator.translationY(v.y)
-                .setDuration(200)
-                .withEndAction {
-                    v.y = pos
-                    v.visibility = View.INVISIBLE
-                }
-
-        setAlpha(black_screen_container, 0f)
-    }
-
-
 
 }

@@ -20,50 +20,74 @@
             android:layout_marginBottom="15dp"/>
     </RelativeLayout>
 
-    <TextView
-        android:layout_marginStart="20dp"
-        android:padding="8dp"
-        android:paddingStart="20dp"
-        android:id="@+id/main_page"
+    <LinearLayout
+        android:id="@+id/menuOption1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:text="Главная"
-        android:textColor="@color/colorBlack"
-        android:textStyle="normal"
-        android:textSize="15sp" />
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_marginStart="20dp"
-        android:paddingStart="20dp"
-        android:padding="8dp"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/colorBlack"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:text="Дневник"/>
+        <TextView
+            android:layout_marginStart="20dp"
+            android:padding="10dp"
+            android:paddingStart="16dp"
+            android:id="@+id/main_page"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:background="@drawable/ripple_menu_item"
+            android:text="Главная"
+            android:textColor="@color/colorBlack"
+            android:textStyle="normal"
+            android:clickable="true"
+            android:focusable="true"
+            android:textSize="15sp" />
 
-    <TextView
-        android:layout_marginStart="20dp"
-        android:paddingStart="20dp"
-        android:padding="8dp"
-        android:textColor="@color/colorBlack"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:text="Бот"/>
+        <TextView
+            android:id="@+id/diary"
+            android:background="@drawable/ripple_menu_item"
+            android:layout_marginStart="20dp"
+            android:paddingStart="16dp"
+            android:padding="10dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/colorBlack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Дневник"/>
 
-    <TextView
-        android:layout_marginStart="20dp"
-        android:paddingStart="20dp"
-        android:padding="8dp"
-        android:textColor="@color/colorBlack"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:text="FAQs"/>
+        <TextView
+            android:id="@+id/bot"
+            android:background="@drawable/ripple_menu_item"
+            android:layout_marginStart="20dp"
+            android:paddingStart="16dp"
+            android:padding="10dp"
+            android:textColor="@color/colorBlack"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Бот"/>
+
+        <TextView
+            android:id="@+id/faqs"
+            android:background="@drawable/ripple_menu_item"
+            android:layout_marginStart="20dp"
+            android:paddingStart="16dp"
+            android:padding="10dp"
+            android:textColor="@color/colorBlack"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="FAQs"/>
+
+    </LinearLayout>
 
 </LinearLayout>

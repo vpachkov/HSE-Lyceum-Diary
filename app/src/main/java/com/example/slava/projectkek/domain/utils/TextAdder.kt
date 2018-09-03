@@ -59,7 +59,11 @@ object TextAdder {
             diaryBlock.setBackgroundResource(R.drawable.rounded_item_light_gray)
 
             val diaryBlockParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            diaryBlockParams.setMargins(0,30,0,0)
+            if (diary.keys().asSequence().last().toString() == i){
+                diaryBlockParams.setMargins(0,30,0,120)
+            }
+            else
+                diaryBlockParams.setMargins(0,30,0,0)
             diaryBlock.layoutParams = diaryBlockParams
 
             val dateNameView = TextView(context)

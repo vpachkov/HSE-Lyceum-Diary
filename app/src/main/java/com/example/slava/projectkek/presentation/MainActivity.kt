@@ -10,10 +10,12 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.eclipsesource.json.Json
+import com.eclipsesource.json.JsonArray
 import com.eclipsesource.json.JsonObject
 import com.example.slava.projectkek.R
 import com.example.slava.projectkek.data.PreferencesHelper
@@ -27,10 +29,20 @@ import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.black_screen.*
 import org.jetbrains.anko.doAsync
 import kotlinx.android.synthetic.main.pop_up_menu.*
+import kotlinx.android.synthetic.main.tomorrow_homework.*
+import kotlinx.android.synthetic.main.tomorrow_schedule.*
 import org.jetbrains.anko.uiThread
+import org.json.JSONArray
 import java.text.ParsePosition
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+    private fun calculateNextDay(currentDay: String){
+        var nextDay = currentDay[0].toString()+currentDay[1]+currentDay[2]+currentDay[3]
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,33 +73,105 @@ class MainActivity : AppCompatActivity() {
         val token = PreferencesHelper.getSharedPreferenceString(applicationContext,
                 PreferencesHelper.KEY_TOKEN, "error")
 
+        //calculating 2 days range date
+
+        val c = Calendar.getInstance()
+        c.add(Calendar.DAY_OF_YEAR, 1)
+        val d = c.time
+
+        val dateToday = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Date())
+        val dateTomorrow = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(d)
+        val timeFormat = SimpleDateFormat("HHmmss", Locale.getDefault()).format(Date())
+
+        //
+
 
         doAsync {
-            Log.e("keek" , "kekkekekekkse")
-            responseHomework = get("https://api.eljur.ru/api/gethomework/?auth_token=$token&devkey=8227490faaaa60bb94b7cb2f92eb08a4&vendor=hselyceum&out_format=json")
-            responseShedule = get("https://api.eljur.ru/api/getschedule/?auth_token=$token&devkey=8227490faaaa60bb94b7cb2f92eb08a4&vendor=hselyceum&out_format=json")
-            Log.e("keek" , responseHomework.jsonObject.getJSONObject("response").getString("state"))
+            responseHomework = get("https://api.eljur.ru/api/gethomework/?auth_token=$token&devkey=8227490faaaa60bb94b7cb2f92eb08a4&" +
+                    "vendor=hselyceum&out_format=json&days=$dateToday-$dateTomorrow")
+            responseShedule = get("https://api.eljur.ru/api/getschedule/?auth_token=$token&devkey=8227490faaaa60bb94b7cb2f92eb08a4&" +
+                    "vendor=hselyceum&out_format=json&days=$dateToday-$dateTomorrow&rings=true")
+
             uiThread {
-                //val homework = responseHomework.jsonObject.getJSONObject("response").getJSONObject("result").
-                  //      getJSONObject("students").getJSONObject("386").getJSONObject("days").
-                    //    getJSONObject("20160118").getJSONObject("items")
 
-                //val shedule = responseShedule.jsonObject.getJSONObject("response").getJSONObject("result").
-                   //     getJSONObject("students").getJSONObject("21554").getJSONObject("days").
-                     //   getJSONObject("20180901").getJSONObject("items")
+                var scheduleObj = responseShedule.jsonObject.getJSONObject("response").getJSONObject("result").getJSONObject("students")
+                        .getJSONObject("21554").getJSONObject("days").getJSONObject(dateToday).getJSONObject("items")
 
-                //for (i in homework.keys()){
-                  //  TextAdder.addHomework(main_block.findViewById(R.id.tomorrow_homework) ,
-                    //        i.toString(),
-                      //      homework.getJSONObject(i).getJSONObject("homework").getJSONObject("1").getString("value"),
+                val endTime = scheduleObj.getJSONObject(scheduleObj.keys().asSequence().last().toString()).getString("endtime")
+
+                var parsedEndTime = endTime[0].toString()+endTime[1]+endTime[3]+endTime[4]
+
+                if (parsedEndTime >= timeFormat){
+                    header_text.text = "Домашнее задание на сегодня"
+
+                    if (responseHomework.jsonObject.getJSONObject("response").get("result") is JSONArray){
+                        val text = TextView(cont)
+                        text.text = "Нет домашнего задания"
+                        text.textSize = 20f
+                        text.setTextColor(Color.parseColor("#000000"))
+                        text.setTypeface(null, Typeface.BOLD)
+
+                        val textParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                        textParams.setMargins(0,20,0,0)
+
+                        text.layoutParams = textParams
+
+                        tomorrow_homework.addView(text)
+                    }
+
+                    else{
+                        //for (i in homework.keys()){
+                        //  TextAdder.addHomework(main_block.findViewById(R.id.tomorrow_homework) ,
+                        //        i.toString(),
+                        //      homework.getJSONObject(i).getJSONObject("homework").getJSONObject("1").getString("value"),
                         //    cont)
-                //}
+                        //}
+                    }
 
-               // for (i in shedule.keys()){
+                    schedule_text.text = "Рассписание на сегодня"
 
-                  //  TextAdder.addSchedule(main_block.findViewById(R.id.tomorrow_schedule),
-                         //   shedule.getJSONObject(i).getString("name"), cont)
-               // }
+                    for (i in scheduleObj.keys()){
+
+                      TextAdder.addSchedule(main_block.findViewById(R.id.tomorrow_schedule),
+                       scheduleObj.getJSONObject(i).getString("name"), cont)
+                     }
+
+
+                }
+
+                else{
+                    scheduleObj = responseShedule.jsonObject.getJSONObject("response").getJSONObject("result").getJSONObject("students")
+                            .getJSONObject("21554").getJSONObject("days").getJSONObject(dateTomorrow).getJSONObject("items")
+                    header_text.text = "Домашнее задание на завтра"
+                    if (responseHomework.jsonObject.getJSONObject("response").get("result") is JSONArray){
+                        val text = TextView(cont)
+                        text.text = "Нет домашнего задания"
+                        text.textSize = 20f
+                        text.setTextColor(Color.parseColor("#000000"))
+                        text.setTypeface(null, Typeface.BOLD)
+
+                        val textParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                        textParams.setMargins(0,20,0,0)
+
+                        text.layoutParams = textParams
+
+                        tomorrow_homework.addView(text)
+                    }
+
+                    schedule_text.text = "Рассписание на завтра"
+
+                    for (i in scheduleObj.keys()){
+
+                        TextAdder.addSchedule(main_block.findViewById(R.id.tomorrow_schedule),
+                                scheduleObj.getJSONObject(i).getString("name"), cont)
+                    }
+
+
+                }
+
+
+
+
 
 
 

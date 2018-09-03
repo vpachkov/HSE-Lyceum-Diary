@@ -3,8 +3,14 @@ package com.example.slava.projectkek.domain.utils
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
+import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.eclipsesource.json.JsonObject
+import com.example.slava.projectkek.R
+import okhttp3.Response
+import org.json.JSONObject
 
 object TextAdder {
     fun addHomework(container: LinearLayout , subject: String, work: String, context: Context){
@@ -43,5 +49,94 @@ object TextAdder {
 
         container.addView(subject)
     }
+
+    fun addDiaryBlock(container: LinearLayout, context: Context, diary: JSONObject){
+
+        for (i in diary.keys()){
+            val diaryBlock = LinearLayout(context)
+            diaryBlock.orientation = LinearLayout.VERTICAL
+            diaryBlock.setPadding(20,20,20,20)
+            diaryBlock.setBackgroundResource(R.drawable.rounded_item_light_gray)
+
+            val diaryBlockParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            diaryBlockParams.setMargins(0,30,0,0)
+            diaryBlock.layoutParams = diaryBlockParams
+
+            val dateNameView = TextView(context)
+            dateNameView.text = parseDate(diary.getJSONObject(i).getString("name"))
+            dateNameView.textSize  = 18f
+
+            val dayNameView = TextView(context)
+            dayNameView.text = diary.getJSONObject(i).getString("title")
+            dayNameView.textSize  = 23f
+            dayNameView.setTypeface(null, Typeface.BOLD)
+            dayNameView.setTextColor(Color.parseColor("#000000"))
+
+
+
+            val grayLine = View(context)
+            grayLine.layoutParams = ViewGroup.LayoutParams(380, 11)
+            grayLine.setBackgroundResource(R.drawable.rounded_item_gray)
+
+            diaryBlock.addView(dateNameView)
+            diaryBlock.addView(dayNameView)
+            diaryBlock.addView(grayLine)
+
+            for (j in diary.getJSONObject(i).getJSONObject("items").keys()){
+                val subjectNameView = TextView(context)
+                subjectNameView.text = diary.getJSONObject(i).getJSONObject("items").getJSONObject(j).getString("name")
+                subjectNameView.textSize = 20f
+                subjectNameView.setTypeface(null, Typeface.BOLD)
+                subjectNameView.setTextColor(Color.parseColor("#000000"))
+
+                val subjectNameViewParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                subjectNameViewParams.setMargins(0,30,0,0)
+
+                subjectNameView.layoutParams = subjectNameViewParams
+
+                diaryBlock.addView(subjectNameView)
+            }
+
+            container.addView(diaryBlock)
+
+        }
+
+
+
+
+
+
+
+
+    }
+
+    private fun parseDate(date :String): String{
+        val month: String = date[4].toString()+date[5].toString() + " "
+
+        var parsedDate = if (date[6].toString() == "0")
+            date[7].toString()
+        else
+            date[6].toString()+date[7].toString()
+
+        parsedDate += " "
+
+
+        parsedDate += when(month){
+            "01" -> "яннваря"
+            "02" -> "февраля"
+            "03" -> "марта"
+            "04" -> "апреля"
+            "05" -> "мая"
+            "06" -> "июня"
+            "07" -> "июля"
+            "08" -> "августа"
+            "09" -> "сентября"
+            "10" -> "октября"
+            "11" -> "ноября"
+            else -> "декабря"
+        }
+        return parsedDate
+    }
+
 
 }

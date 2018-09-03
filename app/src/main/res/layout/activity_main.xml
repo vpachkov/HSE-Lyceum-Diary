@@ -7,32 +7,37 @@
     tools:context=".presentation.MainActivity"
     android:background="@color/colorWhite"
     android:id="@+id/main_layout">
-
-    <LinearLayout
-        android:id="@+id/main_block"
-        android:padding="20dp"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:textColor="@color/colorBlack"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/main_block"
+            android:padding="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="Главная"
-            android:textSize="20sp"/>
-        <include
-            layout="@layout/alert_block"/>
-        <include
-            layout="@layout/tomorrow_homework"/>
-        <include
-            layout="@layout/tomorrow_schedule"/>
-    </LinearLayout>
+            android:orientation="vertical">
+            <TextView
+                android:textColor="@color/colorBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Главная"
+                android:textSize="20sp"/>
+            <include
+                layout="@layout/alert_block"/>
+            <include
+                layout="@layout/tomorrow_homework"/>
+            <include
+                layout="@layout/tomorrow_schedule"/>
+        </LinearLayout>
+    </ScrollView>
+
 
     <RelativeLayout
         android:id="@+id/bottom_line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
         android:layout_alignParentBottom="true"
         >
         <ImageView

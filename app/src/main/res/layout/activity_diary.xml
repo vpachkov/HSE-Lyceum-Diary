@@ -1,156 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_height="wrap_content"
-    android:layout_width="match_parent"
+
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="20dp"
-    android:orientation="vertical">
-    <TextView
-        android:textColor="@color/colorBlack"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="Дневник"
-        android:textSize="20sp"/>
-    <LinearLayout
-        android:layout_marginTop="16dp"
-        android:id="@+id/Monday"
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_item_light_gray"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
+    <ScrollView android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <LinearLayout
+            android:id="@+id/schedule_container"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="23 Апреля"/>
-        <TextView
-            android:textStyle="bold"
-            android:textSize="19sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Понедельниик"
-            android:textColor="@color/colorBlack"/>
+            android:padding="20dp"
+            android:orientation="vertical">
+            <TextView
+                android:textColor="@color/colorBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Дневник"
+                android:textSize="20sp"/>
+        </LinearLayout>
+    </ScrollView>
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="30dp"
-        android:id="@+id/Tuesday"
-        android:padding="10dp"
+    <RelativeLayout
+        android:id="@+id/bottom_line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_item_light_gray"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="24 Апреля"/>
-        <TextView
-            android:textStyle="bold"
-            android:textSize="19sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Вторник"
-            android:textColor="@color/colorBlack"/>
+        android:background="@color/colorWhite"
+        android:layout_alignParentBottom="true"
+        >
+        <ImageView
+            android:id="@+id/showPopUpMenu"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="4dp"
+            android:clickable="true"
+            android:padding="12dp"
+            android:focusable="true"
+            android:src="@drawable/dots_vertical"
+            android:tint="@color/colorBlack" />
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="30dp"
-        android:id="@+id/Wednesday"
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_item_light_gray"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="25 Апреля"/>
-        <TextView
-            android:textStyle="bold"
-            android:textSize="19sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Среда"
-            android:textColor="@color/colorBlack"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="30dp"
-        android:id="@+id/Thursday"
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_item_light_gray"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="26 Апреля"/>
-        <TextView
-            android:textStyle="bold"
-            android:textSize="19sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Четверг"
-            android:textColor="@color/colorBlack"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="30dp"
-        android:id="@+id/Friday"
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_item_light_gray"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="27 Апреля"/>
-        <TextView
-            android:textStyle="bold"
-            android:textSize="19sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Пятница"
-            android:textColor="@color/colorBlack"/>
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/Saturday"
-        android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:padding="5dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingStart="10dp"
+        android:paddingEnd="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/rounded_item_light_gray"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:elevation="0.01dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/rounded_item">
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_bot_logo_small"/>
 
         <TextView
+            android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="28 Апреля"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Суббота"
+            android:layout_gravity="center"
+            android:text="Бот"
             android:textColor="@color/colorBlack"
-            android:textSize="19sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
     </LinearLayout>
-
-
-</LinearLayout>
-</ScrollView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorBorder"
+        android:layout_above="@id/bottom_line"/>
+    <include
+        android:id="@+id/black_screen_container"
+        layout="@layout/black_screen" />
+    <include
+        android:id="@+id/menu"
+        android:visibility="invisible"
+        layout="@layout/pop_up_menu"/>
+</RelativeLayout>

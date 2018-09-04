@@ -99,12 +99,13 @@ class MainActivity : AppCompatActivity() {
 
                 val endTime = scheduleObj.getJSONObject(scheduleObj.keys().asSequence().last().toString()).getString("endtime")
 
-                var parsedEndTime = endTime[0].toString()+endTime[1]+endTime[3]+endTime[4]
+                val parsedEndTime = endTime[0].toString()+endTime[1]+endTime[3]+endTime[4]
 
                 if (parsedEndTime >= timeFormat){
                     header_text.text = "Домашнее задание на сегодня"
 
-                    if (responseHomework.jsonObject.getJSONObject("response").get("result") is JSONArray){
+                    if (responseHomework.jsonObject.getJSONObject("response").get("result") is JSONArray || !responseHomework.jsonObject.getJSONObject("response").getJSONObject("result")
+                                    .getJSONObject("students").getJSONObject("21554").getJSONObject("days").has(dateToday)){
                         val text = TextView(cont)
                         text.text = "Нет домашнего задания"
                         text.textSize = 20f
@@ -119,14 +120,19 @@ class MainActivity : AppCompatActivity() {
                         tomorrow_homework.addView(text)
                     }
 
-                    else{
-                        //for (i in homework.keys()){
-                        //  TextAdder.addHomework(main_block.findViewById(R.id.tomorrow_homework) ,
-                        //        i.toString(),
-                        //      homework.getJSONObject(i).getJSONObject("homework").getJSONObject("1").getString("value"),
-                        //    cont)
-                        //}
+                    else if (responseHomework.jsonObject.getJSONObject("response").getJSONObject("result")
+                            .getJSONObject("students").getJSONObject("21554").getJSONObject("days").has(dateToday)){
+                        val homework = responseHomework.jsonObject.getJSONObject("response").getJSONObject("result")
+                                .getJSONObject("students").getJSONObject("21554").getJSONObject("days").getJSONObject(dateToday).getJSONObject("items")
+
+                        for (i in homework.keys()){
+                            TextAdder.addHomework(main_block.findViewById(R.id.tomorrow_homework) ,
+                              i.toString(),
+                                homework.getJSONObject(i).getJSONObject("homework").getJSONObject("1").getString("value"),
+                               cont)
+                        }
                     }
+
 
                     schedule_text.text = "Рассписание на сегодня"
 
@@ -140,10 +146,13 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 else{
+
                     scheduleObj = responseShedule.jsonObject.getJSONObject("response").getJSONObject("result").getJSONObject("students")
                             .getJSONObject("21554").getJSONObject("days").getJSONObject(dateTomorrow).getJSONObject("items")
                     header_text.text = "Домашнее задание на завтра"
-                    if (responseHomework.jsonObject.getJSONObject("response").get("result") is JSONArray){
+
+                    if (responseHomework.jsonObject.getJSONObject("response").get("result") is JSONArray || !responseHomework.jsonObject.getJSONObject("response").getJSONObject("result")
+                            .getJSONObject("students").getJSONObject("21554").getJSONObject("days").has(dateTomorrow)){
                         val text = TextView(cont)
                         text.text = "Нет домашнего задания"
                         text.textSize = 20f
@@ -156,6 +165,19 @@ class MainActivity : AppCompatActivity() {
                         text.layoutParams = textParams
 
                         tomorrow_homework.addView(text)
+                    }
+
+                    else if (responseHomework.jsonObject.getJSONObject("response").getJSONObject("result")
+                                    .getJSONObject("students").getJSONObject("21554").getJSONObject("days").has(dateTomorrow)){
+                        val homework = responseHomework.jsonObject.getJSONObject("response").getJSONObject("result")
+                                .getJSONObject("students").getJSONObject("21554").getJSONObject("days").getJSONObject(dateTomorrow).getJSONObject("items")
+
+                        for (i in homework.keys()){
+                            TextAdder.addHomework(main_block.findViewById(R.id.tomorrow_homework) ,
+                                    i.toString(),
+                                    homework.getJSONObject(i).getJSONObject("homework").getJSONObject("1").getString("value"),
+                                    cont)
+                        }
                     }
 
                     schedule_text.text = "Рассписание на завтра"

@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.eclipsesource.json.JsonObject
 import com.example.slava.projectkek.R
+import com.example.slava.projectkek.R.id.header_text
 import okhttp3.Response
 import org.json.JSONObject
 
@@ -136,6 +137,10 @@ object TextAdder {
             container.addView(diaryBlock)
 
         }
+
+        fun makeMainPageBlocks(homework:JsonObject, schedule: JsonObject, day: String){
+        }
+
 
 
 

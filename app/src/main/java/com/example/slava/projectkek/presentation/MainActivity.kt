@@ -102,7 +102,11 @@ class MainActivity : AppCompatActivity() {
 
                     var queryDay = "1"
 
-                    if (ElJurApiHelper.calculateLessonEndTime(responseShedule.jsonObject.getJSONObject("response").getJSONObject("result")
+                    if (responseShedule.jsonObject.getJSONObject("response").getJSONObject("result")
+                                    .getJSONObject("students").getJSONObject("21554")
+                                    .getJSONObject("days").keys()
+                                    .asSequence().contains(dateToday) &&
+                            ElJurApiHelper.calculateLessonEndTime(responseShedule.jsonObject.getJSONObject("response").getJSONObject("result")
                                     .getJSONObject("students").getJSONObject("21554")
                                     .getJSONObject("days").getJSONObject(dateToday)
                                     .getJSONObject("items")) >= timeFormat){
@@ -138,7 +142,7 @@ class MainActivity : AppCompatActivity() {
                     else if (responseHomework.jsonObject.getJSONObject("response").getJSONObject("result")
                                     .getJSONObject("students").getJSONObject("21554").getJSONObject("days").has(queryDay)){
                         val homework = responseHomework.jsonObject.getJSONObject("response").getJSONObject("result")
-                                .getJSONObject("students").getJSONObject("21554").getJSONObject("days").getJSONObject(dateToday).getJSONObject("items")
+                                .getJSONObject("students").getJSONObject("21554").getJSONObject("days").getJSONObject(queryDay).getJSONObject("items")
 
                         for (i in homework.keys()){
                             TextAdder.addHomework(main_block.findViewById(R.id.tomorrow_homework) ,

@@ -138,13 +138,6 @@ object TextAdder {
 
         }
 
-        fun makeMainPageBlocks(homework:JsonObject, schedule: JsonObject, day: String){
-        }
-
-
-
-
-
 
 
 

@@ -50,9 +50,15 @@ object TextAdder {
         container.addView(subject)
     }
 
-    fun addDiaryBlock(container: LinearLayout, context: Context, diary: JSONObject){
+    fun addDiaryBlock(container: LinearLayout, context: Context, diary: JSONObject, homework: JSONObject){
+
+        val homeworkKeys = homework.keys()
+        var isHomework = false
+
+        //homeworkKeys.iterator().asSequence().contains()
 
         for (i in diary.keys()){
+            var lastHomework = "1"
             val diaryBlock = LinearLayout(context)
             diaryBlock.orientation = LinearLayout.VERTICAL
             diaryBlock.setPadding(20,20,20,20)
@@ -86,6 +92,9 @@ object TextAdder {
             diaryBlock.addView(dayNameView)
             diaryBlock.addView(grayLine)
 
+            isHomework = homework.keys().asSequence().contains(i)
+
+
             for (j in diary.getJSONObject(i).getJSONObject("items").keys()){
                 val subjectNameView = TextView(context)
                 subjectNameView.text = diary.getJSONObject(i).getJSONObject("items").getJSONObject(j).getString("name")
@@ -99,6 +108,29 @@ object TextAdder {
                 subjectNameView.layoutParams = subjectNameViewParams
 
                 diaryBlock.addView(subjectNameView)
+
+                if (isHomework){
+                    if (homework.getJSONObject(i).getJSONObject("items").keys().asSequence()
+                                    .contains(diary.getJSONObject(i).getJSONObject("items")
+                                            .getJSONObject(j).getString("name")) && lastHomework != diary.getJSONObject(i).getJSONObject("items").getJSONObject(j).getString("name")){
+                        val homeworkView = TextView(context)
+                        homeworkView.text = homework.getJSONObject(i).getJSONObject("items").getJSONObject(diary.getJSONObject(i)
+                                .getJSONObject("items").getJSONObject(j).getString("name")).getJSONObject("homework")
+                                .getJSONObject("1").getString("value")
+                        homeworkView.textSize = 20f
+
+                        val homeworkViewParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                        //homeworkViewParams.setMargins(0,15,0,0)
+
+                        homeworkView.layoutParams = homeworkViewParams
+
+                        diaryBlock.addView(homeworkView)
+
+                        lastHomework = diary.getJSONObject(i).getJSONObject("items").getJSONObject(j).getString("name")
+
+
+                    }
+                }
             }
 
             container.addView(diaryBlock)

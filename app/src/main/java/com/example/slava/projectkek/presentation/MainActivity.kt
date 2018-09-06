@@ -19,10 +19,7 @@ import com.eclipsesource.json.JsonArray
 import com.eclipsesource.json.JsonObject
 import com.example.slava.projectkek.R
 import com.example.slava.projectkek.data.PreferencesHelper
-import com.example.slava.projectkek.domain.utils.Animations
-import com.example.slava.projectkek.domain.utils.ElJurApiHelper
-import com.example.slava.projectkek.domain.utils.MenuPainter
-import com.example.slava.projectkek.domain.utils.TextAdder
+import com.example.slava.projectkek.domain.utils.*
 import khttp.get
 import khttp.responses.Response
 import kotlinx.android.synthetic.main.activity_main.*
@@ -62,6 +59,10 @@ class MainActivity : AppCompatActivity() {
 
         val token = PreferencesHelper.getSharedPreferenceString(applicationContext,
                 PreferencesHelper.KEY_TOKEN, "error")
+
+        val resources = resources
+
+
 
         //calculating 2 days range date
 
@@ -127,7 +128,7 @@ class MainActivity : AppCompatActivity() {
                     {
                         val text = TextView(cont)
                         text.text = "Нет домашнего задания"
-                        text.textSize = 20f
+                        text.textSize = PixelConverter.convertDpToPixels(20f, cont).toFloat() // change
                         text.setTextColor(Color.parseColor("#000000"))
                         text.setTypeface(null, Typeface.BOLD)
 

@@ -7,12 +7,17 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
 import com.example.slava.projectkek.R
 import org.json.JSONObject
 import org.w3c.dom.Text
+import android.support.v4.content.ContextCompat.startActivity
+import android.content.Intent
+import android.net.Uri
+import android.widget.*
+import android.widget.ScrollView
+
+
+
 
 object TextAdder {
 
@@ -147,7 +152,25 @@ object TextAdder {
                         makeTeacherBlock(diary.getJSONObject(i).getJSONObject("items").getJSONObject(j).getString("teacher"), context)
                 )
 
-                diaryBlock.addView(extraInformationBlock)
+                if (diary.getJSONObject(i).getJSONObject("items").getJSONObject(j).keys().asSequence().contains("files")){
+                    for (file in 0 until diary.getJSONObject(i).getJSONObject("items").getJSONObject(j).getJSONArray("files").length()){
+                        extraInformationBlock.addView(
+                                makeFileBlock(
+                                        diary.getJSONObject(i).getJSONObject("items").getJSONObject(j).getJSONArray("files").getJSONObject(file).getString("filename"),
+                                        diary.getJSONObject(i).getJSONObject("items").getJSONObject(j).getJSONArray("files").getJSONObject(file).getString("link"),
+                                        context
+                                )
+                        )
+                    }
+                }
+
+                val scrollextraInformationBlock = HorizontalScrollView(context)
+                scrollextraInformationBlock.isHorizontalScrollBarEnabled = false
+                scrollextraInformationBlock.overScrollMode = ScrollView.OVER_SCROLL_NEVER
+                scrollextraInformationBlock.addView(extraInformationBlock)
+
+
+                diaryBlock.addView(scrollextraInformationBlock)
 
                 if (diary.getJSONObject(i).getJSONObject("items").getJSONObject(j).keys().asSequence().contains("homework")){
                     for (hw in diary.getJSONObject(i).getJSONObject("items").getJSONObject(j).getJSONObject("homework").keys())
@@ -168,14 +191,40 @@ object TextAdder {
 
     }
 
+    private fun makeFileBlock(fileName: String, fileUrl: String, context: Context): TextView{
+        val fileBlock = TextView(context)
+        fileBlock.text = fileName
+        val fileBlockParams = RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                PixelConverter.convertDpToPixels(22f , context)
+        )
+        fileBlock.setPadding(
+                PixelConverter.convertDpToPixels(8f , context),
+                0,
+                PixelConverter.convertDpToPixels(8f , context),
+                0
+        )
+        fileBlockParams.setMargins(0, 0, PixelConverter.convertDpToPixels(7.5f, context), 0)
+        fileBlock.gravity = Gravity.CENTER
+        fileBlock.layoutParams = fileBlockParams
+        fileBlock.background = context.getResources().getDrawable(R.drawable.rounded_lesson_start_time)
+        fileBlock.setTypeface(null, Typeface.BOLD)
+        fileBlock.setTextColor(Color.parseColor("#000000"))
+
+        fileBlock.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(fileUrl))
+            context.applicationContext.startActivity(browserIntent)
+        }
+        return fileBlock
+    }
+
     private fun makeHomeworkBlock(homework: String, context: Context): TextView{
         val homeworkView = TextView(context)
         homeworkView.text = homework
         homeworkView.setTextSize(TypedValue.COMPLEX_UNIT_SP , 16f)
 
         val homeworkViewParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        homeworkViewParams.setMargins(0,
-                PixelConverter.convertDpToPixels(5f , context),0,0)
+        homeworkViewParams.setMargins(0, PixelConverter.convertDpToPixels(5f , context),0,0)
 
         homeworkView.layoutParams = homeworkViewParams
 
@@ -202,8 +251,11 @@ object TextAdder {
         val extraInformationBlock = LinearLayout(context)
         extraInformationBlock.orientation = LinearLayout.HORIZONTAL
         val extraInformationBlockParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT , LinearLayout.LayoutParams.WRAP_CONTENT)
-        extraInformationBlockParams.setMargins(0, PixelConverter.convertDpToPixels(7.5f, context), 0, 0)
+        //extraInformationBlockParams.setMargins(0, PixelConverter.convertDpToPixels(7.5f, context), 0, 0)
         extraInformationBlock.layoutParams = extraInformationBlockParams
+        extraInformationBlock.setPadding(
+                0 , PixelConverter.convertDpToPixels(7.5f, context) , 0 , 0
+        )
         return extraInformationBlock
     }
 

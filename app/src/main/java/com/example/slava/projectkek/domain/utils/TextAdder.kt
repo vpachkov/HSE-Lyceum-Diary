@@ -68,7 +68,7 @@ object TextAdder {
         container.addView(subject)
     }
 
-    fun addDiaryBlock(container: LinearLayout, context: Context, diary: JSONObject, homework: JSONObject, assessments: JSONObject){
+    fun addDiaryBlock(container: LinearLayout, context: Context, diary: JSONObject){
 
         lessonSize = PixelConverter.convertDpToPixels(7.5f, context).toFloat()
         homeworkSize = PixelConverter.convertDpToPixels(7f, context).toFloat()
@@ -79,13 +79,7 @@ object TextAdder {
         grayLineWidth = PixelConverter.convertDpToPixels(120f, context).toFloat()
 
 
-        var isHomework = false
-        var isAssessments = false
-
-        //homeworkKeys.iterator().asSequence().contains()
-
         for (i in diary.keys()){
-            var lastHomework = "1"
             val diaryBlock = LinearLayout(context)
             diaryBlock.orientation = LinearLayout.VERTICAL
             diaryBlock.setPadding(lessonSize.toInt(), lessonSize.toInt(), lessonSize.toInt(), lessonSize.toInt())
@@ -119,10 +113,6 @@ object TextAdder {
             diaryBlock.addView(dayNameView)
             diaryBlock.addView(grayLine)
 
-            isHomework = homework.keys().asSequence().contains(i)
-            isAssessments = assessments.keys().asSequence().contains(i)
-
-
             for (j in diary.getJSONObject(i).getJSONObject("items").keys()){
                 val subjectNameView = TextView(context)
                 subjectNameView.text = diary.getJSONObject(i).getJSONObject("items").getJSONObject(j).getString("name")
@@ -139,18 +129,16 @@ object TextAdder {
 
                 val extraInformationBlock = makeExtraInformationBlock(context)
 
-                if (isAssessments && assessments.getJSONObject(i).getJSONObject("items").keys().asSequence().contains(j)){
-                    for (mks in 0 until assessments.getJSONObject(i).getJSONObject("items")
-                            .getJSONObject(j).getJSONArray("assessments").length()){
+                if (diary.getJSONObject(i).getJSONObject("items").getJSONObject(j).keys().asSequence().contains("assessments")){
+                    for (mks in 0 until diary.getJSONObject(i).getJSONObject("items").getJSONObject(j).getJSONArray("assessments").length())
                         extraInformationBlock.addView(
-                               makeMarkBlock(
-                                       assessments.getJSONObject(i).getJSONObject("items")
-                                               .getJSONObject(j).getJSONArray("assessments").getJSONObject(mks)
-                                               .getString("value").toUpperCase(),
-                                       context
-                               )
+                                makeMarkBlock(
+                                        diary.getJSONObject(i).getJSONObject("items")
+                                                .getJSONObject(j).getJSONArray("assessments").getJSONObject(mks)
+                                                .getString("value").toUpperCase(),
+                                        context
+                                )
                         )
-                    }
                 }
                 extraInformationBlock.addView(
                         makeStartTimeBlock(diary.getJSONObject(i).getJSONObject("items").getJSONObject(j).getString("starttime"), context)
@@ -161,28 +149,13 @@ object TextAdder {
 
                 diaryBlock.addView(extraInformationBlock)
 
-                if (isHomework){
-                    if (homework.getJSONObject(i).getJSONObject("items").keys().asSequence()
-                                    .contains(diary.getJSONObject(i).getJSONObject("items")
-                                            .getJSONObject(j).getString("name")) && lastHomework != diary.getJSONObject(i).getJSONObject("items").getJSONObject(j).getString("name")){
-                        val homeworkView = TextView(context)
-                        homeworkView.text = homework.getJSONObject(i).getJSONObject("items").getJSONObject(diary.getJSONObject(i)
-                                .getJSONObject("items").getJSONObject(j).getString("name")).getJSONObject("homework")
-                                .getJSONObject("1").getString("value")
-                        homeworkView.setTextSize(TypedValue.COMPLEX_UNIT_SP , 16f)
-
-                        val homeworkViewParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                        //homeworkViewParams.setMargins(0,15,0,0)
-
-                        homeworkView.layoutParams = homeworkViewParams
-
-                        diaryBlock.addView(homeworkView)
-
-                        lastHomework = diary.getJSONObject(i).getJSONObject("items").getJSONObject(j).getString("name")
-
-
-                    }
+                if (diary.getJSONObject(i).getJSONObject("items").getJSONObject(j).keys().asSequence().contains("homework")){
+                    for (hw in diary.getJSONObject(i).getJSONObject("items").getJSONObject(j).getJSONObject("homework").keys())
+                        diaryBlock.addView(
+                                makeHomeworkBlock(diary.getJSONObject(i).getJSONObject("items").getJSONObject(j).getJSONObject("homework").getJSONObject(hw).getString("value") , context)
+                        )
                 }
+
             }
 
             container.addView(diaryBlock)
@@ -193,6 +166,20 @@ object TextAdder {
 
 
 
+    }
+
+    private fun makeHomeworkBlock(homework: String, context: Context): TextView{
+        val homeworkView = TextView(context)
+        homeworkView.text = homework
+        homeworkView.setTextSize(TypedValue.COMPLEX_UNIT_SP , 16f)
+
+        val homeworkViewParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        homeworkViewParams.setMargins(0,
+                PixelConverter.convertDpToPixels(5f , context),0,0)
+
+        homeworkView.layoutParams = homeworkViewParams
+
+        return homeworkView
     }
 
     private fun makeMarkBlock(mark: String, context: Context): TextView{

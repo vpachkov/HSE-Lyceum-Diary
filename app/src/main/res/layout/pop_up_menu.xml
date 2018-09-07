@@ -56,6 +56,20 @@
             android:clickable="true"
             android:focusable="true"
             android:text="Дневник"/>
+        <TextView
+            android:id="@+id/messages"
+            android:background="@drawable/ripple_menu_item"
+            android:layout_marginStart="20dp"
+            android:paddingStart="16dp"
+            android:padding="10dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/colorBlack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Сообщения"/>
 
         <TextView
             android:id="@+id/bot"

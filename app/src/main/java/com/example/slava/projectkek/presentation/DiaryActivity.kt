@@ -23,6 +23,7 @@ class DiaryActivity: AppCompatActivity() {
 
         doAsync {
             val responseDiary = get("https://api.eljur.ru/api/getdiary/?auth_token=$token&devkey=8227490faaaa60bb94b7cb2f92eb08a4&vendor=hselyceum&out_format=json&rings=yes")
+            val lol = get("https://api.eljur.ru/api/getassessments/?auth_token=$token&devkey=8227490faaaa60bb94b7cb2f92eb08a4&vendor=hselyceum&out_format=json&rings=yes")
 
 
             uiThread {

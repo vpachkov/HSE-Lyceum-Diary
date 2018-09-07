@@ -24,6 +24,9 @@
         <activity
             android:name=".presentation.DiaryActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".presentation.MessagesActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

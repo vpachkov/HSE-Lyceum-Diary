@@ -220,6 +220,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, DiaryActivity::class.java)
             startActivity(intent)
         }
+        messages.setOnClickListener {
+            val intent = Intent(this, MessagesActivity::class.java)
+            startActivity(intent)
+        }
         menu.setOnClickListener {
             Log.e("keek" , "lllll")
         }

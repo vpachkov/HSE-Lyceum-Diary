@@ -4,19 +4,19 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
 import android.util.TypedValue
-import android.view.Gravity
-import android.view.View
-import android.view.ViewGroup
 import com.example.slava.projectkek.R
 import org.json.JSONObject
 import org.w3c.dom.Text
 import android.support.v4.content.ContextCompat.startActivity
 import android.content.Intent
 import android.net.Uri
+import android.text.Layout
+import android.text.style.AlignmentSpan
+import android.view.*
 import android.widget.*
 import android.widget.ScrollView
-
-
+import android.R.attr.x
+import android.graphics.Point
 
 
 object TextAdder {
@@ -189,6 +189,33 @@ object TextAdder {
 
 
 
+    }
+
+    fun makeChatMessage(text:String , context: Context, isTeacher: Boolean) : TextView{
+
+        val wm: WindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val display: Display = wm.getDefaultDisplay()
+        val size = Point()
+        display.getSize(size)
+        val width = size.x
+
+        val messageView = TextView(context)
+        messageView.text = text
+        messageView.setTextSize(TypedValue.COMPLEX_UNIT_SP , 16f)
+        val messageViewParams = LinearLayout.LayoutParams(width * 3 / 4 , LinearLayout.LayoutParams.WRAP_CONTENT)
+        messageViewParams.setMargins(0 , PixelConverter.convertDpToPixels(10f, context) , 0 , PixelConverter.convertDpToPixels(10f, context))
+        messageView.layoutParams = messageViewParams
+        messageView.setPadding(PixelConverter.convertDpToPixels(10f, context),
+                PixelConverter.convertDpToPixels(20f, context),
+                PixelConverter.convertDpToPixels(10f, context),
+                PixelConverter.convertDpToPixels(20f, context))
+        messageView.setTextColor(Color.parseColor("#000000"))
+        if (isTeacher)
+            messageView.setBackgroundResource(R.drawable.teacher_message)
+        else {
+            messageView.setBackgroundResource(R.drawable.user_message)
+        }
+        return messageView
     }
 
     private fun makeFileBlock(fileName: String, fileUrl: String, context: Context): TextView{

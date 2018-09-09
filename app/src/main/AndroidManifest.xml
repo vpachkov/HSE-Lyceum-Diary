@@ -27,6 +27,9 @@
         <activity
             android:name=".presentation.MessagesActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".presentation.ChatActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

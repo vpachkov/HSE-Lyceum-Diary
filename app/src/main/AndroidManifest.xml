@@ -29,6 +29,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.ChatActivity"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait" />
     </application>
 
